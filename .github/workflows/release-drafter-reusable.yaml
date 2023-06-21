@@ -6,6 +6,9 @@ on:
       config-path:
         required: true
         type: string
+      publish-release:
+        required: false
+        type: boolean
       disable-autolabeler:
         required: false
         type: boolean
@@ -26,6 +29,16 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: version
+        id: version
+        run: |
+          tag=${GITHUB_REF/refs\/tags\//}
+          version=${tag#v}
+          major=${version%%.*}
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "major=${major}" >> $GITHUB_OUTPUT
+          
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       #- name: Set GHE_HOST
       #  run: |
@@ -35,6 +48,8 @@ jobs:
       - uses: release-drafter/release-drafter@v5
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         with:
+          version: ${{ steps.version.outputs.version }}
+          publish: ${{ inputs.publish-release}}
           config-name: ${{ inputs.config-path }}
           disable-autolabeler: ${{ inputs.disable-autolabeler }}
         env:
