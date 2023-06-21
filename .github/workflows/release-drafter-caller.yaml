@@ -21,6 +21,7 @@ jobs:
     with:
       # specify config name to use, relative to .github/.
       config-path: release-drafter.yml
+      publish-release: true
       disable-autolabeler: false
     secrets:
       caller_token: ${{ secrets.GITHUB_TOKEN }}
