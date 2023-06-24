@@ -11,6 +11,6 @@ permissions:
   
 jobs:
   call-reusable:
-    uses: NathanaelGandhi/stale-reusable-workflow/.github/workflows/stale-reusable.yaml@v0.1.5
+    uses: NathanaelGandhi/stale-reusable-workflow/.github/workflows/stale-reusable.yaml@main
     secrets:
       caller_token: ${{ secrets.GITHUB_TOKEN }}
